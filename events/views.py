@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.http import HttpResponse
 from .models import Event
 from .utils import get_request
+from eye.settings import task_queue
 import json
 
 
@@ -16,8 +17,9 @@ class SaveEvent(APIView):
 
     def post(self, request):
         data = request.data
-        Event.objects.create(**data)
-        return HttpResponse("Event saved", 400)
+        task_queue.put(data)
+        print('event added to queue')
+        return HttpResponse("Event saved", 200)
 
 
 class ListEvents(APIView):
