@@ -6,7 +6,7 @@ class Event(models.Model):
     category = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255, blank=True)
     data = models.JSONField()
-    timestamp = models.CharField(max_length=255, blank=True)
+    timestamp = models.DateTimeField()
 
     class Meta:
         db_table = 'event_log'
